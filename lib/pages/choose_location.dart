@@ -28,8 +28,17 @@ class _ChooseLocationState extends State<ChooseLocation> {
       for(int i = 0; i < data.length; i++){
         if(data[i].contains("/")){
           setState(() {
-            locationsList.add(WorldTime(url: data[i], location: (data[i].split("/")).sublist(1)[0], flag: "uk.png"));
-            locationsToShow.add(WorldTime(url: data[i], location: (data[i].split("/")).sublist(1)[0], flag: "uk.png"));
+            dynamic location = data[i].split("/");
+            if(location.length > 2){
+              print(location);
+              locationsList.add(WorldTime(url: data[i], location: '${location.sublist(1,3)[0]}/${location.sublist(1,3)[1]}', flag: "uk.png"));
+              locationsToShow.add(WorldTime(url: data[i], location: '${location.sublist(1,3)[0]}/${location.sublist(1,3)[1]}', flag: "uk.png"));
+
+            }else{
+              locationsList.add(WorldTime(url: data[i], location: (data[i].split("/")).sublist(1)[0], flag: "uk.png"));
+              locationsToShow.add(WorldTime(url: data[i], location: (data[i].split("/")).sublist(1)[0], flag: "uk.png"));
+            }
+
           });
         }
       }
