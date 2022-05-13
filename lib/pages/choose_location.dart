@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-
+import 'package:easy_search_bar/easy_search_bar.dart';
 import '../services/world_time.dart';
 
 
@@ -41,30 +41,42 @@ class _ChooseLocationState extends State<ChooseLocation> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      appBar: AppBar(
+      appBar: EasySearchBar(
+          title: Text('Choose a Location',
+            style: TextStyle(
+              color: Colors.grey[300],
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onSearch: (value) => setState(() => {
+            locations.retainWhere((countryone) => countryone.location.toLowerCase().contains(value))
+          }),
           backgroundColor: Colors.blue[900],
-          title:Text("choose location"),
-          centerTitle: true,
-          elevation:0
+          elevation: 0,
+          searchBackgroundColor: Colors.white,
       ),
-      body: ListView.builder(
-          itemCount: locations.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
-              child: Card(
-                child: ListTile(
-                  onTap: () {
-                    updateTime(index);
-                  },
-                  title: Text(locations[index].location),
-                  leading: CircleAvatar(
-                    backgroundImage: AssetImage('assets/${locations[index].flag}'),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+        child: ListView.builder(
+            itemCount: locations.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
+                child: Card(
+                  child: ListTile(
+                    onTap: () {
+                      updateTime(index);
+                    },
+                    title: Text(locations[index].location),
+                    leading: CircleAvatar(
+                      backgroundImage: AssetImage('assets/${locations[index].flag}'),
+                    ),
                   ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
+      ),
     );
   }
 
