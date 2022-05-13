@@ -15,7 +15,6 @@ class WorldTime {
   WorldTime({ required this.location, required this.flag, required this.url});
 
 
-
   Future<void> getTime() async{
     try {
       Response response = await get(Uri.parse('http://worldtimeapi.org/api/timezone/$url'));
@@ -35,6 +34,18 @@ class WorldTime {
       time = DateFormat.jm().format(now);
     } on Exception catch (e) {
       print("Error while getting data $e");
+    }
+  }
+
+
+  static dynamic getCountries() async{
+    try {
+      Response response = await get(Uri.parse('http://worldtimeapi.org/api/timezone/'));
+      return json.decode(response.body);
+
+    } on Exception catch (e) {
+      print("Error while getting data $e");
+      rethrow;
     }
   }
 
